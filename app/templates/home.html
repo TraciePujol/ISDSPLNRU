@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Welcome to PLNR U</title>
 </head>
 <body>
-    <h1>Welcome to the Home Page</h1>
+    <!-- First header with horizontal navigation -->
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Welcome to PLNR U</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/logout">Sign Out</a></li>
+            <li><a href="mailto:support@plnru.com">Need Support</a></li>
+        </ul>
+    </header>
 
-    <!-- Navigation menu -->
-    <ul>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="/logout">Sign Out</a></li>
-    </ul>
-</body>
-<!-- Footer -->
-<footer style="margin-top: 20px;"> <!-- Add margin-top here -->
-    <div class="footer-content">
-        <div class="left-content">
-            <p>&copy; 2023 Capstone Consultants</p>
-            <div class="names">
-                <p>Project Manager: John Vrana</p>
-                <p>Documentation & Compliance: Marissa Black</p>
-                <p>Data & Quality Assurance: Tracie Pujol</p>
-                <p>ISDS 4125 Fall1 2023</p>
-            </div>
+    <div class="content" style="display: flex;">
+        <!-- Second set of navigation on the left -->
+        <ul style="list-style-type: none; padding: 0;">
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/logout">Sign Out</a></li>
+            <li><a href="mailto:support@plnru.com">Need Support</a></li>
+        </ul>
+
+        <!-- Create New Task button -->
+        <div class="create-task-button" style="margin-left: 20px;">
+            <a href="/create_task">Create New Task</a>
         </div>
-        <div class="right-content">
-            <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
+
+        <!-- Display tasks -->
+        <div class="tasks">
+            <h2>Your Tasks</h2>
+            <ul>
+                {% for task in tasks %}
+                    <li>
+                        <strong>{{ task.title }}</strong><br>
+                        Due Date: {{ task.due_date }}<br>
+                        Description: {{ task.description }}<br>
+                        <!-- Add more task details as needed -->
+                        
+                        <!-- Edit and Delete buttons -->
+                        <form method="post" action="/edit_task/{{ task.id }}">
+                            <button type="submit">Edit</button>
+                        </form>
+                        
+                        <form method="post" action="/delete_task/{{ task.id }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
-</footer>
+
+    <!-- Footer -->
+    <footer style="margin-top: 20px;">
+        <div class="footer-content">
+            <div class="left-content">
+                <p>&copy; 2023 Capstone Consultants</p>
+                <div class="names">
+                    <p>Project Manager: John Vrana</p>
+                    <p>Documentation & Compliance: Marissa Black</p>
+                    <p>Data & Quality Assurance: Tracie Pujol</p>
+                    <p>ISDS 4125 Fall1 2023</p>
+                </div>
+            </div>
+            <div class="right-content">
+                <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

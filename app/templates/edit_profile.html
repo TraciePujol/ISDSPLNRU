@@ -17,37 +17,61 @@
     {% endwith %}
 
     {% if user_is_logged_in %}
-    <form method="POST" action="/edit_profile">
-            <label for="firstName">First Name:</label>
-            <input type="text" name="firstName" value="{{ user.user_firstName }}"><br>
+    <form method="POST" action='/edit_profile'>
+        <label for="firstName">First Name:</label>
+        <input type="text" name="firstName" value="{{ user.user_firstName }}"><br>
         
-            <label for="lastName">Last Name:</label>
-            <input type="text" name="lastName" value="{{ user.user_lastName }}"><br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" name="lastName" value="{{ user.user_lastName }}"><br>
         
-            <label for="email">Email:</label>
-            <input type="email" name="email" value="{{ user.user_email }}" required><br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" value="{{ user.user_email }}" required><br>
         
-            <label for="school">School:</label>
-            <input type="text" name="school" value="{{ user.user_college }}"><br>
+        <label for="school">School:</label>
+        <input type="text" name="school" value="{{ user.user_college }}"><br>
         
-            <label for="major">Major:</label>
-            <input type="text" name="major" value="{{ user.user_major }}"><br>
+        <label for="major">Major:</label>
+        <input type="text" name="major" value="{{ user.user_major }}"><br>
         
-            <label for="graduation">Graduation:</label>
-            <input type="text" name="graduation" value="{{ user.user_graduation }}"><br>
+        <label for="graduation_month">Graduation Month:</label>
+        <select name="graduation_month" id="graduation_month">
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+        </select><br>
         
-            <label for="classification">Classification:</label>
-            <input type="text" name="classification" value="{{ user.user_classification }}"><br>
+        <label for="graduation_year">Graduation Year:</label>
+        <select name="graduation_year" id="graduation_year">
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <!-- Add options for all years -->
+        </select><br>
         
-            <!-- Add labels for other fields you want to include in the form -->
         
-            <input type="submit" value="Save Changes">
-        </form>
-        
-
-        <button type="submit">Save Changes</button>
-        <a href="{{ url_for('profile') }}">Cancel</a>  <!-- Add this line for the "Cancel" button -->
+        <label for="classification">Classification:</label>
+        <select name="classification">
+            <option value="Freshman" {% if user.user_classification == "Freshman" %}selected{% endif %}>Freshman</option>
+            <option value="Sophomore" {% if user.user_classification == "Sophomore" %}selected{% endif %}>Sophomore</option>
+            <option value="Junior" {% if user.user_classification == "Junior" %}selected{% endif %}>Junior</option>
+            <option value="Senior" {% if user.user_classification == "Senior" %}selected{% endif %}>Senior</option>
+        </select><br>
+    
+        <!-- Add labels for other fields you want to include in the form -->
+    
+        <input type="submit" value="Save Changes">
     </form>
+    
     {% else %}
     <p>Please log in to access the edit profile page.</p>
     <a href="/login">Log in</a>

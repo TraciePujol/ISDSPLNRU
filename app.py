@@ -39,7 +39,7 @@ Session(app)
 
 # Define the is_user_logged_in function
 def is_user_logged_in():
-    # Check if the 'user_id' key is present in the session
+    # Check if the 'user_username' key is present in the session
     return 'user_username' in session
 
 # ... Other routes and functions ...
@@ -105,20 +105,26 @@ def home():
 @app.route('/profile')
 def profile():
     # Retrieve the user's profile information from the database
-    user_id = session.get('user_id')
-    user = db.session.query(User).get(user_id)
+    user_username = session.get('user_username')
+    user = dbsession.query(User).filter_by(user_username=user_username).first()
 
     # Render the profile template with the user's information
     return render_template('profile.html', user=user)
 
-# Edit Profile route
+
+from flask import render_template
+
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
     # Determine if the user is logged in
-    is_user_logged_in = 'user_id' in session
+    is_user_logged_in = 'user_username' in session
 
     if is_user_logged_in:
         # The user is logged in, continue with profile editing logic
+
+        # Retrieve the user's profile data from your database or session
+        # For example, if you store user data in session, you can retrieve it like this:
+        user = session.get('user_data', {})
 
         if request.method == 'POST':
             # Update the user's profile
@@ -136,13 +142,15 @@ def edit_profile():
         return redirect(url_for('login'))
 
 
+
+
 # Tasks route
 @app.route('/tasks')
 def tasks():
     # Check if the user is logged in
     if 'user_id' in session:
         # Retrieve the username of the currently logged-in user
-        logged_in_username = session['user_id']
+        logged_in_username = session['user_username']
 
         # Query the UserXTask table to get the user_x_task rows associated with the logged-in user
         user_x_task_rows = db.session.query(UserXTask).filter_by(user_username=logged_in_username).all()
@@ -181,7 +189,7 @@ def edit_task(task_id):
 @app.route('/logout')
 def logout():
     # Clear the user's session
-    session.pop('user_id', None)
+    session.pop('user_username', None)
     # Redirect to the login page or any other desired page
     return redirect(url_for('login'))
 
