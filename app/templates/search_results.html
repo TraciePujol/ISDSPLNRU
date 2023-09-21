@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    
+    {% if students %}
+        <ul>
+            {% for student in students %}
+                <li>
+                    Username: {{ student.user_username }}<br>
+                    Name: {{ student.user_firstName }} {{ student.user_lastName }}<br>
+                    <!-- Add more student details as needed -->
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No matching students found.</p>
+    {% endif %}
+
+    <a href="/">Back to Home</a>
+</body>
+<!-- Footer -->
+<footer style="margin-top: 20px;"> <!-- Add margin-top here -->
+    <div class="footer-content">
+        <div class="left-content">
+            <p>&copy; 2023 Capstone Consultants</p>
+            <div class="names">
+                <p>Project Manager: John Vrana</p>
+                <p>Documentation & Compliance: Marissa Black</p>
+                <p>Data & Quality Assurance: Tracie Pujol</p>
+                <p>ISDS 4125 Fall1 2023</p>
+            </div>
+        </div>
+        <div class="right-content">
+            <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
+        </div>
+    </div>
+</footer>
+</html>

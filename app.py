@@ -2,6 +2,8 @@
 # Import necessary packages and modules
 from flask import Flask, render_template, request, redirect, flash, url_for, session
 from flask_session import Session
+from flask import request  # Import the request object
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -35,7 +37,6 @@ Base = declarative_base()
 # Initialize the Flask-Session extension
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
-
 
 # Define the is_user_logged_in function
 def is_user_logged_in():
@@ -101,6 +102,29 @@ def home():
         # Implement your logic for non-logged-in users here
         return render_template('landing.html')  # Redirect to the landing page for non-logged-in users
 
+# Example route for searching students with the same .edu domain
+@app.route('/search', methods=['POST'])
+def search():
+    if request.method == 'POST':
+        search_type = request.form.get('search_type')
+
+        if search_type == 'edu_domain':
+            # Get the current user's email domain
+            user_email = session.get('user_email', '')  # Replace with your session variable
+
+            # Extract the domain from the email
+            user_domain = user_email.split('@')[1]
+
+            # Query the database for students with the same domain and public profiles
+            matching_students = User.query.filter_by(user_email.like(f'%@{user_domain}')).filter_by(user_status='public').all()
+
+            return render_template('search_results.html', students=matching_students)
+    
+    # Handle other search types or errors here
+    return redirect(url_for('home'))
+
+
+
 # Profile route
 @app.route('/profile')
 def profile():
@@ -111,9 +135,7 @@ def profile():
     # Render the profile template with the user's information
     return render_template('profile.html', user=user)
 
-
-from flask import render_template
-
+# Edit profile route
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
     # Determine if the user is logged in
@@ -127,8 +149,35 @@ def edit_profile():
         user = session.get('user_data', {})
 
         if request.method == 'POST':
-            # Update the user's profile
-            # ...
+            # Update the user's profile based on the form data
+
+            # Get the form data
+            first_name = request.form.get('firstName')
+            last_name = request.form.get('lastName')
+            email = request.form.get('email')
+            school = request.form.get('school')
+            major = request.form.get('major')
+            graduation = request.form.get('graduation')
+            classification = request.form.get('classification')
+
+            # Update the user's profile in the database (assuming you have a User model)
+            user_in_db = User.query.filter_by(user_username=user['user_username']).first()
+            user_in_db.user_firstName = first_name
+            user_in_db.user_lastName = last_name
+            user_in_db.user_email = email
+            user_in_db.user_college = school
+            user_in_db.user_major = major
+            user_in_db.user_graduation = graduation
+            user_in_db.user_classification = classification
+
+            # Update searchability
+            is_searchable = request.form.get('is_searchable')  # Get the value from the form
+            user_in_db = User.query.filter_by(user_username=user['user_username']).first()
+            user_in_db.is_searchable = is_searchable  # Update the searchability field
+
+
+            # Commit the changes to the database
+            db.session.commit()  # <-- Place it here
 
             flash('Profile updated successfully!', 'success')
 
@@ -140,8 +189,6 @@ def edit_profile():
         # The user is not logged in, show a message and redirect to the login page
         flash('Please log in to access the edit profile page.', 'info')
         return redirect(url_for('login'))
-
-
 
 
 # Tasks route

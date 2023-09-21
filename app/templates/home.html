@@ -24,6 +24,12 @@
             <li><a href="mailto:support@plnru.com">Need Support</a></li>
         </ul>
 
+        <form method="POST" action="{{ url_for('search') }}">
+            <input type="hidden" name="search_type" value="edu_domain">
+            <button type="submit">Search Students from your School!</button>
+        </form>
+                   
+
         <!-- Create New Task button -->
         <div class="create-task-button" style="margin-left: 20px;">
             <a href="/create_task">Create New Task</a>

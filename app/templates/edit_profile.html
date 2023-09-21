@@ -18,6 +18,9 @@
 
     {% if user_is_logged_in %}
     <form method="POST" action='/edit_profile'>
+        <label for="is_searchable">Make my profile searchable:</label>
+        <input type="checkbox" name="is_searchable" {% if user.is_searchable %}checked{% endif %}>
+
         <label for="firstName">First Name:</label>
         <input type="text" name="firstName" value="{{ user.user_firstName }}"><br>
         

@@ -1,6 +1,6 @@
 # app.models.py
 # Import declarative_base and other necessary classes and functions from SQLAlchemy
-from sqlalchemy import Column, Integer, String, DateTime, Date, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, Date, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import declarative_base
 
@@ -24,6 +24,8 @@ class User(Base):
 
     # Define a one-to-many relationship with Task
     tasks = relationship("Task", back_populates="user")
+
+is_searchable = Column(Boolean, default=True)  # Default to True, meaning profiles are searchable by default
 
 class Task(Base):
     __tablename__ = 'Task'
