@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Task</title>
+</head>
+<body>
+    <h1>Create Task</h1>
+
+    <!-- Task creation form -->
+    <form method="POST" action="/create_task">
+        <label for="title">Title:</label>
+        <input type="text" name="title" required><br>
+
+        <label for="description">Description:</label>
+        <textarea name="description" rows="4" required></textarea><br>
+
+        <input type="submit" value="Create Task">
+    </form>
+
+    <a href="/tasks">Back to Tasks</a>
+</body>
+<!-- Footer -->
+<footer style="margin-top: 20px;"> <!-- Add margin-top here -->
+    <div class="footer-content">
+        <div class="left-content">
+            <p>&copy; 2023 Capstone Consultants</p>
+            <div class="names">
+                <p>Project Manager: John Vrana</p>
+                <p>Documentation & Compliance: Marissa Black</p>
+                <p>Data & Quality Assurance: Tracie Pujol</p>
+                <p>ISDS 4125 Fall1 2023</p>
+            </div>
+        </div>
+        <div class="right-content">
+            <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
+        </div>
+    </div>
+</footer>
+</body>
+</html>

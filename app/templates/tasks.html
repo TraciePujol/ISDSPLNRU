@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Management</title>
+    <style>
+        /* CSS for the sidebar navigation menu */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            padding-top: 20px;
+            padding-left: 10px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* CSS for the main content area */
+        .content {
+            margin-left: 270px; /* Adjust this value to leave space for the sidebar */
+            padding: 20px;
+        }
+
+        /* CSS for the buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+		    /* CSS for the table and its borders */
+    .task-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #ddd; /* Border around the entire table */
+    }
+
+    /* CSS for table headers (th) */
+    .task-table th {
+        background-color: #f2f2f2; /* Header background color */
+        border: 1px solid #ddd; /* Border for header cells */
+        padding: 8px; /* Add padding for header cells */
+        text-align: left;
+    }
+
+    /* CSS for table cells (td) */
+    .task-table td {
+        border: 1px solid #ddd; /* Border for data cells */
+        padding: 8px; /* Add padding for data cells */
+        text-align: left;
+    }
+    </style>
+</head>
+<body>
+    <!-- Sidebar navigation menu -->
+    <div class="sidebar">
+        <a href="/">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/tasks">Tasks</a>
+        <a href="/logout">Sign Out</a>
+    </div>
+	
+	<!-- Header section with the logged-in username -->
+<div class="header">
+    <span class="logged-in-username">
+        {% if 'user_id' in session %}
+            Logged In: {{ session['user_id'] }}
+        {% endif %}
+    </span>
+</div>
+
+    <!-- Main content area -->
+    <div class="content">
+        <h1>Task Management</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Buttons for task actions -->
+        <div>
+            <a class="btn" href="/add_task">Add Task</a>
+            <a class="btn" href="/edit_task">Edit Task</a>
+            <a class="btn" href="/delete_task">Delete Task</a>
+<div>
+    <h2>Your Tasks</h2>
+    <table class="task-table">
+        <thead>
+            <tr>
+                <th>Task Name</th>
+                <th>Notes</th>
+                <th>Start Date</th>
+                <th>Due Date</th>
+                <!-- Add other table headers here if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.task_description }}</td>
+                    <td>{{ task.task_Notes }}</td>
+                    <td>{{ task.task_startDate }}</td>
+                    <td>{{ task.task_dueDate }}</td>
+                    <!-- Add other table cells here if needed -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+<!-- Footer -->
+<footer style="margin-top: 20px;"> <!-- Add margin-top here -->
+    <div class="footer-content">
+        <div class="left-content">
+            <p>&copy; 2023 Capstone Consultants</p>
+            <div class="names">
+                <p>Project Manager: John Vrana</p>
+                <p>Documentation & Compliance: Marissa Black</p>
+                <p>Data & Quality Assurance: Tracie Pujol</p>
+                <p>ISDS 4125 Fall1 2023</p>
+            </div>
+        </div>
+        <div class="right-content">
+            <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
+        </div>
+    </div>
+</footer>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Profile</title>
+</head>
+<body>
+    <h1>Edit Your Profile</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if user_is_logged_in %}
+    <form method="POST" action="/edit_profile">
+            <label for="firstName">First Name:</label>
+            <input type="text" name="firstName" value="{{ user.user_firstName }}"><br>
+        
+            <label for="lastName">Last Name:</label>
+            <input type="text" name="lastName" value="{{ user.user_lastName }}"><br>
+        
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="{{ user.user_email }}" required><br>
+        
+            <label for="school">School:</label>
+            <input type="text" name="school" value="{{ user.user_college }}"><br>
+        
+            <label for="major">Major:</label>
+            <input type="text" name="major" value="{{ user.user_major }}"><br>
+        
+            <label for="graduation">Graduation:</label>
+            <input type="text" name="graduation" value="{{ user.user_graduation }}"><br>
+        
+            <label for="classification">Classification:</label>
+            <input type="text" name="classification" value="{{ user.user_classification }}"><br>
+        
+            <!-- Add labels for other fields you want to include in the form -->
+        
+            <input type="submit" value="Save Changes">
+        </form>
+        
+
+        <button type="submit">Save Changes</button>
+        <a href="{{ url_for('profile') }}">Cancel</a>  <!-- Add this line for the "Cancel" button -->
+    </form>
+    {% else %}
+    <p>Please log in to access the edit profile page.</p>
+    <a href="/login">Log in</a>
+    {% endif %}
+
+    <!-- Footer -->
+    <footer style="margin-top: 20px;">
+        <div class="footer-content">
+            <div class="left-content">
+                <p>&copy; 2023 Capstone Consultants</p>
+                <div class="names">
+                    <p>Project Manager: John Vrana</p>
+                    <p>Documentation & Compliance: Marissa Black</p>
+                    <p>Data & Quality Assurance: Tracie Pujol</p>
+                    <p>ISDS 4125 Fall1 2023</p>
+                </div>
+            </div>
+            <div class="right-content">
+                <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

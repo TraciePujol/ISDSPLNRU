@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Task</title>
+</head>
+<body>
+    <h1>Delete Task</h1>
+
+    <p>Are you sure you want to delete this task?</p>
+    <p><strong>Title:</strong> {{ task.title }}</p>
+    <p><strong>Description:</strong> {{ task.description }}</p>
+
+    <!-- Task deletion form -->
+    <form method="POST" action="/delete_task/{{ task_id }}">
+        <input type="submit" value="Confirm Delete">
+    </form>
+
+    <a href="/tasks">Cancel</a>
+</body>
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="left-content">
+            <p>&copy; 2023 Capstone Consultants</p>
+            <div class="names">
+                <p>Project Manager: John Vrana</p>
+                <p>Documentation & Compliance: Marissa Black</p>
+                <p>Data & Quality Assurance: Tracie Pujol</p>
+                <p>ISDS 4125 Fall1 2023</p>
+            </div>
+        </div>
+        <div class="right-content">
+            <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
+        </div>
+    </div>
+</footer>
+</body>
+</html>
