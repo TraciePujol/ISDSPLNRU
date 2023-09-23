@@ -255,7 +255,6 @@ def create_task():
 
 # ... Other routes and views ...
 
-if __name__ == '__main__':
     app.run(debug=True)
 # Edit Task route
 @app.route('/edit_task/<int:task_ID>', methods=['GET', 'POST'])
@@ -276,13 +275,6 @@ def edit_task(task_ID):
 
     return render_template('edit_task.html', task=task)
 
-@app.route('/logout')
-def logout():
-    # Clear the user's session
-    session.pop('user_username', None)
-    # Redirect to the login page or any other desired page
-    return redirect(url_for('login'))
-
 # Delete Task route
 @app.route('/delete_task/<int:task_ID>', methods=['POST'])
 def delete_task(task_ID):
@@ -298,6 +290,19 @@ def delete_task(task_ID):
         flash('Task not found or already deleted.', 'danger')
 
     return redirect(url_for('tasks'))  # Redirect to the tasks page after deletion
+
+@app.route('/logout/<confirmation>', methods=['GET', 'POST'])
+def logout(confirmation=None):
+    if confirmation == 'confirmed':
+        # Clear the user's session
+        session.pop('user_username', None)
+        # Redirect to the login page or any other desired page
+        return redirect(url_for('login'))
+    else:
+        return render_template('logout.html')
+
+
+
 
 # Your other routes and views...
 
