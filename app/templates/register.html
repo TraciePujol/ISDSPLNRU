@@ -2,6 +2,19 @@
 <html>
 <head>
     <title>User Registration</title>
+    <script>
+        function checkExistingAccount() {
+            var username = document.getElementById("username").value;
+            // You would need to implement logic to check if the username already exists in your database
+            // For now, we'll assume a simple check
+            if (username === "existing_username") {
+                var confirmLogin = confirm("You already have an account with this username. Do you want to log in instead?");
+                if (confirmLogin) {
+                    window.location.href = "/login"; // Redirect to the login page
+                }
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>User Registration</h1>
@@ -16,19 +29,19 @@
         {% endif %}
     {% endwith %}
 
-<form method="POST" action="/register">
-    <label for="username">Username:</label>
-    <input type="text" name="username" required><br>
+    <form method="POST" action="/register">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required><br>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" required><br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" required><br>
 
-    <!-- Add a password field for the user's password -->
-    <label for="password">Password:</label>
-    <input type="password" name="password" required><br>
+        <!-- Add a password field for the user's password -->
+        <label for="password">Password:</label>
+        <input type="password" name="password" required><br>
 
-    <input type="submit" value="Register">
-</form>
+        <input type="submit" value="Register" onclick="checkExistingAccount()">
+    </form>
 
     <p>Already have an account? <a href="/login">Login here</a></p>
 </body>
@@ -49,5 +62,4 @@
         </div>
     </div>
 </footer>
-</body>
 </html>

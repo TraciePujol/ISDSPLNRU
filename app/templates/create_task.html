@@ -8,11 +8,29 @@
 
     <!-- Task creation form -->
     <form method="POST" action="/create_task">
-        <label for="title">Title:</label>
-        <input type="text" name="title" required><br>
+        <label for="task_name">Task Name:</label>
+        <input type="text" name="task_name" required><br>
 
-        <label for="description">Description:</label>
-        <textarea name="description" rows="4" required></textarea><br>
+        <label for="task_description">Description:</label>
+        <textarea name="task_description" rows="4" required></textarea><br>
+   
+        <label for="task_Notes">Notes:</label>
+        <textarea name="task_Notes" rows="4"></textarea><br>
+
+        <label for="task_startDate">Start Date:</label>
+        <input type="date" name="task_startDate"><br>
+
+        <label for="task_dueDate">Due Date:</label>
+        <input type="date" name="task_dueDate" required><br>
+
+        <label for="task_timeEstimate">Time Estimate (in minutes):</label>
+        <input type="number" name="task_timeEstimate" required><br>
+
+        <label for="task_Course">Course:</label>
+        <input type="text" name="task_Course" required><br>
+
+        <!-- Add a hidden field for user_username to associate the task with the user -->
+        <input type="hidden" name="user_username" value="{{ session['user_username'] }}">
 
         <input type="submit" value="Create Task">
     </form>
@@ -28,13 +46,8 @@
                 <p>Project Manager: John Vrana</p>
                 <p>Documentation & Compliance: Marissa Black</p>
                 <p>Data & Quality Assurance: Tracie Pujol</p>
-                <p>ISDS 4125 Fall1 2023</p>
             </div>
-        </div>
-        <div class="right-content">
-            <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
         </div>
     </div>
 </footer>
-</body>
 </html>

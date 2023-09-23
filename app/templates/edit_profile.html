@@ -2,6 +2,12 @@
 <html>
 <head>
     <title>Edit Profile</title>
+    <script>
+        function confirmSaveChanges() {
+            var confirmation = confirm("Are you sure you want to save these changes?");
+            return confirmation;
+        }
+    </script>
 </head>
 <body>
     <h1>Edit Your Profile</h1>
@@ -17,9 +23,9 @@
     {% endwith %}
 
     {% if user_is_logged_in %}
-    <form method="POST" action='/edit_profile'>
+    <form method="POST" action='/edit_profile' onsubmit="return confirmSaveChanges()">
         <label for="is_searchable">Make my profile searchable:</label>
-        <input type="checkbox" name="is_searchable" {% if user.is_searchable %}checked{% endif %}>
+        <input type="checkbox" name="is_searchable" {% if user.is_searchable %}checked{% endif %}><br>
 
         <label for="firstName">First Name:</label>
         <input type="text" name="firstName" value="{{ user.user_firstName }}"><br>
@@ -70,8 +76,6 @@
             <option value="Senior" {% if user.user_classification == "Senior" %}selected{% endif %}>Senior</option>
         </select><br>
     
-        <!-- Add labels for other fields you want to include in the form -->
-    
         <input type="submit" value="Save Changes">
     </form>
     
@@ -79,7 +83,7 @@
     <p>Please log in to access the edit profile page.</p>
     <a href="/login">Log in</a>
     {% endif %}
-
+    
     <!-- Footer -->
     <footer style="margin-top: 20px;">
         <div class="footer-content">

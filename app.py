@@ -5,8 +5,10 @@ from flask_session import Session
 from flask import request  # Import the request object
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import or_
+
 
 # Import your Config class and models
 from app.config import Config  # Replace with the actual path to your Config class
@@ -58,11 +60,14 @@ def register():
         password = request.form.get('password')
         email = request.form.get('email')
 
-        # Check if a user with the same username already exists
-        existing_user = User.query.filter_by(user_username=username).first()
+        # Check if a user with the same username or email already exists
+        existing_user = dbsession.query(User).filter(or_(User.user_username == username, User.user_email == email)).first()
 
         if existing_user:
-            flash('Username already exists. Please choose a different username.', 'danger')
+            if existing_user.user_username == username:
+                flash('Username already exists. Please choose a different username.', 'danger')
+            if existing_user.user_email == email:
+                flash('Email already registered. Please use a different email.', 'danger')
         else:
             # Create a new user and insert it into the database
             new_user = User(user_username=username, user_password=password, user_email=email)
@@ -72,6 +77,7 @@ def register():
             return redirect(url_for('login'))
 
     return render_template('register.html')
+
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'])
@@ -86,7 +92,7 @@ def login():
         if user:
             session['user_username'] = user.user_username
             flash('Login successful!', 'success')
-            return redirect(url_for('home'))  # Redirect to 'home' route upon successful login
+            return redirect(url_for('home'))  # Redirect to the home page or another appropriate page upon successful login
         else:
             flash('Username or password is incorrect. Please try again.', 'danger')
 
@@ -214,16 +220,53 @@ def tasks():
         flash('Please log in to access your tasks.', 'info')
         return redirect(url_for('login'))
 
+# Create Task route
+@app.route('/create_task', methods=['POST'])
+def create_task():
+    if request.method == 'POST':
+        task_description = request.form.get('task_description')
+        task_notes = request.form.get('task_Notes')
+        task_start_date = request.form.get('task_startDate')
+        task_due_date = request.form.get('task_dueDate')
+        task_time_estimate = request.form.get('task_timeEstimate')
+        task_course = request.form.get('task_Course')
+        user_username = request.form.get('user_username')  # This is a hidden field
+
+        # Create a new Task instance and add it to the database
+        new_task = Task(
+            task_description=task_description,
+            task_Notes=task_notes,
+            task_startDate=task_start_date,
+            task_dueDate=task_due_date,
+            task_timeEstimate=task_time_estimate,
+            task_Course=task_course,
+            user_username=user_username  # Associate the task with the user
+        )
+        
+        # Add and commit the new task to the database
+        dbsession.add(new_task)
+        dbsession.commit()
+
+        flash('Task created successfully!', 'success')
+        return redirect(url_for('tasks'))
+
+    # Handle other HTTP methods or errors here
+    return redirect(url_for('tasks'))
+
+# ... Other routes and views ...
+
+if __name__ == '__main__':
+    app.run(debug=True)
 # Edit Task route
-@app.route('/edit-task/<int:task_id>', methods=['GET', 'POST'])
-def edit_task(task_id):
+@app.route('/edit_task/<int:task_ID>', methods=['GET', 'POST'])
+def edit_task(task_ID):
     # Retrieve the task to edit from the database (adjust based on your database structure)
-    task = Task.query.get(task_id)
+    task = Task.query.get(task_ID)
 
     if request.method == 'POST':
         # Update the task with user-submitted data
-        task.title = request.form['title']
-        task.description = request.form['description']
+        task.task_description = request.form['task_description']  # Assuming the form field is named 'task_description'
+        task.task_Notes = request.form['task_Notes']  # Assuming the form field is named 'task_Notes'
 
         # Save the changes to the database
         db.session.commit()
@@ -239,6 +282,22 @@ def logout():
     session.pop('user_username', None)
     # Redirect to the login page or any other desired page
     return redirect(url_for('login'))
+
+# Delete Task route
+@app.route('/delete_task/<int:task_ID>', methods=['POST'])
+def delete_task(task_ID):
+    # Retrieve the task to delete from the database (adjust based on your database structure)
+    task = Task.query.get(task_ID)
+
+    if task:
+        # Delete the task from the database
+        db.session.delete(task)
+        db.session.commit()
+        flash('Task deleted successfully!', 'success')
+    else:
+        flash('Task not found or already deleted.', 'danger')
+
+    return redirect(url_for('tasks'))  # Redirect to the tasks page after deletion
 
 # Your other routes and views...
 
