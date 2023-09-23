@@ -1,0 +1,47 @@
+[33mcommit 3235012920856e7d4a17d79f9d93f96375c702f6[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Tracie Pujol <traciepujol@gmail.com>
+Date:   Sat Sep 23 05:41:04 2023 -0500
+
+    Log Out fixed on some pages,  edit profile link is now working and so is create task, its just not commiting the changes at this point to go further.
+
+[33mcommit 504dfd8c88df0a209d8c67a25af85eccd7e28851[m
+Author: Tracie Pujol <traciepujol@gmail.com>
+Date:   Sat Sep 23 04:07:40 2023 -0500
+
+    The Create task button now works and goes to a form, but the task isnt being updated successfully.
+
+[33mcommit 08753f4a1834f72fe4c9fa6eb5a1e1d299500453[m
+Author: Tracie Pujol <traciepujol@gmail.com>
+Date:   Sat Sep 23 02:50:49 2023 -0500
+
+    Task Page officially works, but creating a new task doesnt. Notice other updates
+
+[33mcommit f5189764f9a1b4cf11676d8aed403279a96fe60b[m
+Author: Tracie Pujol <traciepujol@gmail.com>
+Date:   Fri Sep 22 20:30:40 2023 -0500
+
+    Added the logout page with pop, need to check if it works
+
+[33mcommit 2a075e8ba8e9cde3e6a2d6992f270e1afc95bcbd[m
+Author: Tracie Pujol <traciepujol@gmail.com>
+Date:   Fri Sep 22 20:10:51 2023 -0500
+
+    Fixed the registration page error with same username and email error. Also added some changes to the html and app.py
+
+[33mcommit c2d7afe4adeb2a9df311675ac05bb9780fd360ca[m
+Author: Tracie Pujol <traciepujol@gmail.com>
+Date:   Thu Sep 21 09:37:08 2023 -0500
+
+    Added the search feature but it doesnt work yet.
+
+[33mcommit 17a338bf7c34a152ee3ee8ac461cc82097711cc3[m
+Author: Tracie Pujol <traciepujol@gmail.com>
+Date:   Thu Sep 21 08:42:01 2023 -0500
+
+    Updating with Profile/Edit Profile links working, still have a problem saving the edit though.
+
+[33mcommit c30787e458998e451a3179bfc540ff77ec7d094a[m
+Author: Tracie Pujol <traciepujol@gmail.com>
+Date:   Thu Sep 21 07:41:19 2023 -0500
+
+    Working Login and Register Buttons
