@@ -1,105 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Profile</title>
-    <script>
-        function confirmSaveChanges() {
-            var confirmation = confirm("Are you sure you want to save these changes?");
-            return confirmation;
-        }
-    </script>
+    <title>Edit Task</title>
+    <!-- Add your CSS styling if needed -->
 </head>
 <body>
-    <h1>Edit Your Profile</h1>
+    <!-- Include a form for editing the task details -->
+    <form method="POST" action="/edit_task/{{ task_id }}">
+        <!-- Display current task details in input fields for editing -->
+        <label for="task_description">Task Description:</label>
+        <input type="text" id="task_description" name="task_description" value="{{ task_description }}" required><br>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul>
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+        <label for="task_notes">Task Notes:</label>
+        <textarea id="task_notes" name="task_notes">{{ task_notes }}</textarea><br>
 
-    {% if user_is_logged_in %}
-    <form method="POST" action='/edit_profile' onsubmit="return confirmSaveChanges()">
-        <label for="is_searchable">Make my profile searchable:</label>
-        <input type="checkbox" name="is_searchable" {% if user.is_searchable %}checked{% endif %}><br>
-
-        <label for="firstName">First Name:</label>
-        <input type="text" name="firstName" value="{{ user.user_firstName }}"><br>
+        <!-- Include other task details here for editing -->
         
-        <label for="lastName">Last Name:</label>
-        <input type="text" name="lastName" value="{{ user.user_lastName }}"><br>
-        
-        <label for="email">Email:</label>
-        <input type="email" name="email" value="{{ user.user_email }}" required><br>
-        
-        <label for="school">School:</label>
-        <input type="text" name="school" value="{{ user.user_college }}"><br>
-        
-        <label for="major">Major:</label>
-        <input type="text" name="major" value="{{ user.user_major }}"><br>
-        
-        <label for="graduation_month">Graduation Month:</label>
-        <select name="graduation_month" id="graduation_month">
-            <option value="January">January</option>
-            <option value="February">February</option>
-            <option value="March">March</option>
-            <option value="April">April</option>
-            <option value="May">May</option>
-            <option value="June">June</option>
-            <option value="July">July</option>
-            <option value="August">August</option>
-            <option value="September">September</option>
-            <option value="October">October</option>
-            <option value="November">November</option>
-            <option value="December">December</option>
-        </select><br>
-        
-        <label for="graduation_year">Graduation Year:</label>
-        <select name="graduation_year" id="graduation_year">
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-            <!-- Add options for all years -->
-        </select><br>
-        
-        
-        <label for="classification">Classification:</label>
-        <select name="classification">
-            <option value="Freshman" {% if user.user_classification == "Freshman" %}selected{% endif %}>Freshman</option>
-            <option value="Sophomore" {% if user.user_classification == "Sophomore" %}selected{% endif %}>Sophomore</option>
-            <option value="Junior" {% if user.user_classification == "Junior" %}selected{% endif %}>Junior</option>
-            <option value="Senior" {% if user.user_classification == "Senior" %}selected{% endif %}>Senior</option>
-        </select><br>
-    
-        <input type="submit" value="Save Changes">
+        <button type="submit">Edit Task</button>
     </form>
-    
-    {% else %}
-    <p>Please log in to access the edit profile page.</p>
-    <a href="/login">Log in</a>
-    {% endif %}
-    
-    <!-- Footer -->
-    <footer style="margin-top: 20px;">
-        <div class="footer-content">
-            <div class="left-content">
-                <p>&copy; 2023 Capstone Consultants</p>
-                <div class="names">
-                    <p>Project Manager: John Vrana</p>
-                    <p>Documentation & Compliance: Marissa Black</p>
-                    <p>Data & Quality Assurance: Tracie Pujol</p>
-                    <p>ISDS 4125 Fall1 2023</p>
-                </div>
-            </div>
-            <div class="right-content">
-                <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
-            </div>
-        </div>
-    </footer>
 </body>
 </html>

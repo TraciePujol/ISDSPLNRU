@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import or_
+from sqlalchemy import join
 
 
 # Import your Config class and models
@@ -201,18 +202,18 @@ def edit_profile():
 @app.route('/tasks')
 def tasks():
     # Check if the user is logged in
-    if 'user_id' in session:
+    if 'user_username' in session:
         # Retrieve the username of the currently logged-in user
         logged_in_username = session['user_username']
 
         # Query the UserXTask table to get the user_x_task rows associated with the logged-in user
-        user_x_task_rows = db.session.query(UserXTask).filter_by(user_username=logged_in_username).all()
+        user_x_task_rows = dbsession.query(UserXTask).filter_by(user_username=logged_in_username).all()
 
         # Extract the task IDs associated with the logged-in user
         task_ids = [row.task_ID for row in user_x_task_rows]
 
         # Query the Task table to retrieve the tasks associated with the logged-in user
-        tasks = db.session.query(Task).filter(Task.task_ID.in_(task_ids)).all()
+        tasks = dbsession.query(Task).filter(Task.task_ID.in_(task_ids)).all()
 
         return render_template('tasks.html', tasks=tasks)
     else:
@@ -220,27 +221,32 @@ def tasks():
         flash('Please log in to access your tasks.', 'info')
         return redirect(url_for('login'))
 
+
 # Create Task route
 @app.route('/create_task', methods=['POST'])
 def create_task():
     if request.method == 'POST':
         task_description = request.form.get('task_description')
-        task_notes = request.form.get('task_Notes')
-        task_start_date = request.form.get('task_startDate')
-        task_due_date = request.form.get('task_dueDate')
-        task_time_estimate = request.form.get('task_timeEstimate')
-        task_course = request.form.get('task_Course')
+        task_notes = request.form.get('task_notes')
+        task_startDate = request.form.get('task_startDate')
+        task_dueDate = request.form.get('task_dueDate')
+        task_timeEstimate = request.form.get('task_timeEstimate')
+        task_Course = request.form.get('task_Course')
         user_username = request.form.get('user_username')  # This is a hidden field
 
-        # Create a new Task instance and add it to the database
+        # Calculate task priority based on due date
+        priority = calculate_priority(task_dueDate)
+
+        # Create a new Task instance with the calculated priority
         new_task = Task(
             task_description=task_description,
-            task_Notes=task_notes,
-            task_startDate=task_start_date,
-            task_dueDate=task_due_date,
-            task_timeEstimate=task_time_estimate,
-            task_Course=task_course,
-            user_username=user_username  # Associate the task with the user
+            task_notes=task_notes,
+            task_startDate=task_startDate,
+            task_dueDate=task_dueDate,
+            task_timeEstimate=task_timeEstimate,
+            task_Course=task_Course,
+            user_username=user_username,  # Associate the task with the user
+            task_priority=priority  # Assign the calculated priority
         )
         
         # Add and commit the new task to the database
@@ -253,43 +259,51 @@ def create_task():
     # Handle other HTTP methods or errors here
     return redirect(url_for('tasks'))
 
-# ... Other routes and views ...
-
-    app.run(debug=True)
 # Edit Task route
 @app.route('/edit_task/<int:task_ID>', methods=['GET', 'POST'])
 def edit_task(task_ID):
-    # Retrieve the task to edit from the database (adjust based on your database structure)
+    # Retrieve the task to edit from the database
     task = Task.query.get(task_ID)
 
     if request.method == 'POST':
         # Update the task with user-submitted data
-        task.task_description = request.form['task_description']  # Assuming the form field is named 'task_description'
-        task.task_Notes = request.form['task_Notes']  # Assuming the form field is named 'task_Notes'
+        task.task_description = request.form['task_description']
+        task.task_Notes = request.form['task_Notes']
+        task.task_startDate = request.form['task_startDate']
+        task.task_dueDate = request.form['task_dueDate']
+        task.task_timeEstimate = request.form['task_timeEstimate']
+        task.task_Course = request.form['task_Course']
+
+        # Calculate task priority based on the new due date
+        priority = calculate_priority(task.task_dueDate)
+
+        # Update the task's priority
+        task.task_priority = priority
 
         # Save the changes to the database
-        db.session.commit()
+        dbsession.commit()
 
         flash('Task updated successfully!', 'success')
-        return redirect(url_for('tasks'))  # Redirect to the tasks page
+        return redirect(url_for('update_task'))  # Redirect to the update_task page
 
     return render_template('edit_task.html', task=task)
 
 # Delete Task route
-@app.route('/delete_task/<int:task_ID>', methods=['POST'])
+@app.route('/delete_task/<int:task_ID>', methods=['GET', 'POST'])
 def delete_task(task_ID):
-    # Retrieve the task to delete from the database (adjust based on your database structure)
+    # Retrieve the task to delete from the database
     task = Task.query.get(task_ID)
 
-    if task:
+    if request.method == 'POST':
         # Delete the task from the database
-        db.session.delete(task)
-        db.session.commit()
-        flash('Task deleted successfully!', 'success')
-    else:
-        flash('Task not found or already deleted.', 'danger')
+        dbsession.delete(task)
+        dbsession.commit()
 
-    return redirect(url_for('tasks'))  # Redirect to the tasks page after deletion
+        flash('Task deleted successfully!', 'success')
+        return redirect(url_for('tasks'))  # Redirect to the tasks page
+
+    return render_template('delete_task.html', task=task)
+
 
 @app.route('/logout/<confirmation>', methods=['GET', 'POST'])
 def logout(confirmation=None):

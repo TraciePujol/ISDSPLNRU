@@ -3,6 +3,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, Date, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import declarative_base
+from datetime import datetime
 
 # Use declarative_base() to define your Base
 Base = declarative_base()
@@ -42,6 +43,20 @@ class Task(Base):
     user_username = Column(String(30), ForeignKey('users.user_username'))
     user = relationship("User", back_populates="tasks")
 
+# Define a property to calculate task priority based on due date
+    @property
+    def task_priority(self):
+        if self.task_dueDate:
+            today = datetime.now().date()
+            days_until_due = (self.task_dueDate - today).days
+
+            if days_until_due <= 2:
+                return "High Priority"
+            elif days_until_due <= 7:
+                return "Medium Priority"
+        
+        return "Low Priority"
+
 class UserXTask(Base):
     __tablename__ = 'user_x_task'
 
@@ -64,3 +79,4 @@ class TaskPriority(Base):
 
     taskpriority_ID = Column(Integer, primary_key=True)
     taskpriority_description = Column(String(255))
+

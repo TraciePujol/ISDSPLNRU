@@ -8,7 +8,7 @@
     <header style="display: flex; justify-content: space-between; align-items: center;">
         <h1>Welcome to PLNR U</h1>
         <ul>
-            <li><a href="/">Home</a></li>
+            <li><a href="/home">Home</a></li>
             <li><a href="/tasks">Tasks</a></li> 
             <li><a href="/profile">Profile</a></li>
             <li><a href="/logout">Sign Out</a></li>
@@ -26,7 +26,7 @@
     <div class="content" style="display: flex;">
         <!-- Second set of navigation on the left -->
         <ul style="list-style-type: none; padding: 0;">
-            <li><a href="/">Home</a></li>
+            <li><a href="/home">Home</a></li>
             <li><a href="/tasks">Tasks</a></li> 
             <li><a href="/profile">Profile</a></li>
             <li><a href="/logout">Sign Out</a></li>
@@ -47,6 +47,8 @@
                         <strong>{{ task.title }}</strong><br>
                         Due Date: {{ task.due_date }}<br>
                         Description: {{ task.description }}<br>
+                        Priority: {{ task.priority }}<br> <!-- Add this line to display priority -->
+                        
                         <!-- Add more task details as needed -->
                         
                         <!-- Edit and Delete buttons -->
@@ -78,4 +80,7 @@
             <div class="right-content">
                 <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
             </div>
-        </
+        </div>
+    </footer>
+</body>
+</html>
