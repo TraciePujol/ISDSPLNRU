@@ -3,53 +3,114 @@
 <head>
     <title>Profile</title>
     <style>
+        /* CSS for the sidebar navigation menu */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            padding-top: 20px;
+            padding-left: 10px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* CSS for the main content area */
+        .content {
+            margin-left: 270px; /* Adjust this value to leave space for the sidebar */
+            margin-top: 20px; /* Add margin to move content down below the header */
+            padding: 20px;
+        }
+
         /* Add your CSS styles here */
+        /* ... */
+
     </style>
 </head>
 <body>
+    <!-- Sidebar navigation menu -->
+    <div class="sidebar">
+        <a href="/home">Home</a>
+        <a href="/tasks">Tasks</a>
+        <a href="/profile">Profile</a>
+        <a href="#" onclick="confirmLogout()">Sign Out</a> <!-- Added onclick attribute -->
+        <a href="mailto:support@plnru.com">Need Support</a>
+    </div>
+
     <!-- Navigation menu in the header -->
     <header>
         <ul>
-            <li><a href="/">Home</a></li>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/tasks">Tasks</a></li>
             <li><a href="/profile">Profile</a></li>
-            <li><a href="/logout">Sign Out</a></li>
-            <li><a href="mailto:support@plnru.com">Need Support</a></li> <!-- Add the support email link -->
+            <li><a href="#" onclick="confirmLogout()">Sign Out</a></li> <!-- Added onclick attribute -->
+            <li><a href="mailto:support@plnru.com">Need Support</a></li>
         </ul>
     </header>
 
-    <h1>Profile</h1>
+    <div style="margin-left: 300px;">
+        <h1>Profile</h1>
 
-    <!-- Display user information -->
-    <p>Username: {{ user.user_username }}</p>
-    <p>Email: {{ user.user_email }}</p>
-    <p>First Name: {{ user.user_firstName }}</p>
-    <p>Last Name: {{ user.user_lastName }}</p>
-    <p>Last Activity: {{ user.user_lastActivity }}</p>
-    <p>Status: {{ user.user_status }}</p>
-    <p>College: {{ user.user_college }}</p>
-    <p>Major: {{ user.user_major }}</p>
-    <p>Graduation: {{ user.user_graduation }}</p>
-    <p>Classification: {{ user.user_classification }}</p>
+        <!-- Display user information -->
+        <p>Username: {{ user.user_username }}</p>
+        <p>Email: {{ user.user_email }}</p>
+        <p>First Name: {{ user.user_firstName }}</p>
+        <p>Last Name: {{ user.user_lastName }}</p>
+        <p>Last Activity: {{ user.user_lastActivity }}</p>
+        <p>Status: {{ user.user_status }}</p>
+        <p>College: {{ user.user_college }}</p>
+        <p>Major: {{ user.user_major }}</p>
+        <p>Graduation: {{ user.user_graduation }}</p>
+        <p>Classification: {{ user.user_classification }}</p>
 
-    <!-- Edit profile link -->
-    <a href="/edit_profile">Edit Profile</a>
+        <!-- Edit profile link -->
+        <a href="/edit_profile">Edit Profile</a>
+    </div>
 
     <!-- Footer -->
-    <footer style="margin-top: 20px;"> <!-- Add margin-top here -->
-        <div class="footer-content">
-            <div class="left-content">
-                <p>&copy; 2023 Capstone Consultants</p>
-                <div class="names">
-                    <p>Project Manager: John Vrana</p>
-                    <p>Documentation & Compliance: Marissa Black</p>
-                    <p>Data & Quality Assurance: Tracie Pujol</p>
-                    <p>ISDS 4125 Fall1 2023</p>
+    <footer>
+        <div style="margin-top: 50px; margin-left: 270px;">
+            <div class="footer-content">
+                <div class="left-content">
+                    <p>&copy; 2023 Capstone Consultants</p>
+                    <div class="names">
+                        <p>Project Manager: John Vrana</p>
+                        <p>Documentation & Compliance: Marissa Black</p>
+                        <p>Data & Quality Assurance: Tracie Pujol</p>
+                        <p>ISDS 4125 Fall1 2023</p>
+                    </div>
                 </div>
-            </div>
-            <div class="right-content">
-                <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
+                <div class="right-content">
+                    <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
+                </div>
             </div>
         </div>
     </footer>
+
+    <!-- JavaScript for the logout confirmation -->
+    <script>
+        function confirmLogout() {
+            // Use the built-in `confirm` dialog to ask for confirmation
+            const confirmMessage = "Are you sure you want to log out?";
+            const isConfirmed = confirm(confirmMessage);
+        
+            if (isConfirmed) {
+                // If the user confirms, redirect them to the logout route
+                window.location.href = "/logout";
+            }
+        }
+    </script>
 </body>
 </html>

@@ -31,6 +31,9 @@
         .content {
             margin-left: 270px; /* Adjust this value to leave space for the sidebar */
             padding: 20px;
+            display: flex; /* Added to make the content flex layout */
+            justify-content: space-between; /* Spread content horizontally */
+            align-items: flex-start; /* Align content to the top */
         }
 
         /* CSS for the header */
@@ -83,6 +86,17 @@
             padding: 8px; /* Add padding for data cells */
             text-align: left;
         }
+
+        /* CSS for search results */
+        .search-results {
+            flex: 1; /* Make the search results take up available space */
+            margin-left: 20px; /* Add margin for spacing */
+        }
+
+        /* CSS for user search input */
+        .user-search {
+            margin-bottom: 20px; /* Add spacing at the bottom */
+        }
     </style>
 </head>
 <body>
@@ -91,7 +105,7 @@
         <a href="/home">Home</a>
         <a href="/profile">Profile</a>
         <a href="/tasks">Tasks</a>
-        <a href="/logout">Sign Out</a>
+        <a href="#" onclick="confirmLogout()" class="btn">Logout</a> <!-- Added class btn -->
     </div>
 
     <!-- Header section with the logged-in username -->
@@ -101,57 +115,77 @@
                 Logged In: {{ session['user_id'] }}
             {% endif %}
         </span>
+        <a href="#" onclick="confirmLogout()" class="btn">Logout</a> <!-- Added class btn -->
     </div>
 
-    <div class="content" style="display: flex;">
+    <div class="content">
         <!-- Second set of navigation on the left -->
         <ul style="list-style-type: none; padding: 0;">
             <li><a href="/home">Home</a></li>
-            <li><a href="/tasks">Tasks</a></li> 
+            <li><a href="/tasks">Tasks</a></li>
             <li><a href="/profile">Profile</a></li>
-            <li><a href="/logout">Sign Out</a></li>
+            <a href="#" onclick="confirmLogout()" class="btn">Logout</a> <!-- Added class btn -->
             <li><a href="mailto:support@plnru.com">Need Support</a></li>
         </ul>
 
         <!-- Create New Task button -->
-        <div class="create-task-button" style="margin-left: 20px;">
+        <div class="create-task-button">
             <a href="/create_task">Create New Task</a>
         </div>
+    </div>
 
-        <!-- Display tasks -->
-        <div class="tasks">
-            <h2>Your Tasks</h2>
-            <table class="task-table">
-                <thead>
+    <!-- Display tasks -->
+    <div class="tasks">
+        <h2>Your Tasks</h2>
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Notes</th>
+                    <th>Start Date</th>
+                    <th>Due Date</th>
+                    <th>Priority</th>
+                    <th>Actions</th> <!-- Add the Actions column header -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for task, priority in tasks %}
                     <tr>
-                        <th>Task Name</th>
-                        <th>Notes</th>
-                        <th>Start Date</th>
-                        <th>Due Date</th>
-                        <th>Priority</th>
-                        <th>Actions</th> <!-- Add the Actions column header -->
+                        <td>{{ task.task_description }}</td>
+                        <td>{{ task.task_Notes }}</td>
+                        <td>{{ task.task_startDate }}</td>
+                        <td>{{ task.task_dueDate }}</td>
+                        <td>{{ priority.taskpriority_description }}</td>
+                        <td>
+                            <!-- Edit button with pencil symbol -->
+                            <a class="edit-button" href="/edit_task/{{ task.id }}" title="Edit Task">&#9998;</a>
+                            <!-- Delete button with "X" symbol -->
+                            <a class="delete-button" href="/delete_task/{{ task.id }}" title="Delete Task">&#10060;</a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for task, priority in tasks %}
-                        <tr>
-                            <td>{{ task.task_description }}</td>
-                            <td>{{ task.task_Notes }}</td>
-                            <td>{{ task.task_startDate }}</td>
-                            <td>{{ task.task_dueDate }}</td>
-                            <td>{{ priority.taskpriority_description }}</td>
-                            <td>
-                                <!-- Edit button with pencil symbol -->
-                                <a class="edit-button" href="/edit_task/{{ task.id }}" title="Edit Task">&#9998;</a>
-                                <!-- Delete button with "X" symbol -->
-                                <a class="delete-button" href="/delete_task/{{ task.id }}" title="Delete Task">&#10060;</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- User Search -->
+    <div class="search-results">
+        <h2>Search Results</h2>
+        <!-- User search input form -->
+        <form method="POST" action="/search_users" class="user-search">
+            <label for="user_search">Find other students by email:</label>
+            <input type="text" name="user_search" id="user_search" placeholder="Enter email domain (e.g., @lsu.edu)">
+            <input type="submit" value="Search">
+        </form>
+
+        <!-- Display search results here -->
+        <ul>
+            {% for result in search_results %}
+                <li>{{ result.username }} ({{ result.email }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+
     <!-- Footer -->
     <footer style="margin-top: 20px; margin-left: 270px;">
         <div class="footer-content">
@@ -169,5 +203,18 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        function confirmLogout() {
+            // Use the built-in `confirm` dialog to ask for confirmation
+            const confirmMessage = "Are you sure you want to log out?";
+            const isConfirmed = confirm(confirmMessage);
+        
+            if (isConfirmed) {
+                // If the user confirms, redirect them to the logout route
+                window.location.href = "/logout";
+            }
+        }
+    </script>
 </body>
 </html>

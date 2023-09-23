@@ -144,23 +144,18 @@ def profile():
     # Render the profile template with the user's information
     return render_template('profile.html', user=user)
 
-# Edit profile route
+from datetime import datetime
+
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
-    # Determine if the user is logged in
     is_user_logged_in = 'user_username' in session
 
     if is_user_logged_in:
-        # The user is logged in, continue with profile editing logic
-
-        # Retrieve the user's profile data from your database or session
-        # For example, if you store user data in session, you can retrieve it like this:
         user = session.get('user_data', {})
 
-        if request.method == 'POST':
-            # Update the user's profile based on the form data
+        current_year = datetime.now().year
 
-            # Get the form data
+        if request.method == 'POST':
             first_name = request.form.get('firstName')
             last_name = request.form.get('lastName')
             email = request.form.get('email')
@@ -169,7 +164,6 @@ def edit_profile():
             graduation = request.form.get('graduation')
             classification = request.form.get('classification')
 
-            # Update the user's profile in the database (assuming you have a User model)
             user_in_db = User.query.filter_by(user_username=user['user_username']).first()
             user_in_db.user_firstName = first_name
             user_in_db.user_lastName = last_name
@@ -179,24 +173,73 @@ def edit_profile():
             user_in_db.user_graduation = graduation
             user_in_db.user_classification = classification
 
-            # Update searchability
-            is_searchable = request.form.get('is_searchable')  # Get the value from the form
+            is_searchable = request.form.get('is_searchable')
             user_in_db = User.query.filter_by(user_username=user['user_username']).first()
-            user_in_db.is_searchable = is_searchable  # Update the searchability field
+            user_in_db.is_searchable = is_searchable
 
-
-            # Commit the changes to the database
-            db.session.commit()  # <-- Place it here
+            dbsession.commit()
 
             flash('Profile updated successfully!', 'success')
 
-            # Redirect the user to their profile page or another appropriate page
             return redirect(url_for('profile'))
 
-        return render_template('edit_profile.html', user=user, user_is_logged_in=is_user_logged_in)
+        return render_template('edit_profile.html', user=user, user_is_logged_in=is_user_logged_in, current_year=current_year)
+    else:
+        flash('Please log in to access the edit profile page.', 'info')
+        return redirect(url_for('login'))
+
+
+# Update profile route
+@app.route('/update_profile', methods=['POST'])
+def update_profile():
+    """
+    Route for updating the user's profile.
+    """
+
+    # Check if the user is logged in
+    is_user_logged_in = 'user_username' in session
+
+    if is_user_logged_in:
+        # Retrieve the user's existing profile data
+        user = session.get('user_data', {})
+
+        # Get the form data
+        user_email = request.form.get('user_email')
+        user_firstName = request.form.get('user_firstName')
+        user_lastName = request.form.get('user_lastName')
+        graduation_month = request.form.get('graduation_month')
+        graduation_year = request.form.get('graduation_year')
+        user_classification = request.form.get('user_classification')
+        is_searchable = request.form.get('is_searchable')
+
+        # Update the user's profile fields if new values are provided
+        if user_email:
+            user['user_email'] = user_email
+        if user_firstName:
+            user['user_firstName'] = user_firstName
+        if user_lastName:
+            user['user_lastName'] = user_lastName
+        if graduation_month and graduation_year:
+            user['user_graduation'] = f"{graduation_month} {graduation_year}"
+        if user_classification:
+            user['user_classification'] = user_classification
+        user['is_searchable'] = is_searchable == 'on'  # Convert checkbox value to a boolean
+
+        # Update the user's session data with the modified profile
+        session['user_data'] = user
+
+        # Flash a success message
+        flash('Profile updated successfully!', 'success')
+
+        print("Before Update:", session.get('user_data'))
+        # Update the user's profile fields as you do in your route
+        print("After Update:", session.get('user_data'))
+
+        # Redirect the user to their profile page or another appropriate page
+        return redirect(url_for('profile'))
     else:
         # The user is not logged in, show a message and redirect to the login page
-        flash('Please log in to access the edit profile page.', 'info')
+        flash('Please log in to update your profile.', 'info')
         return redirect(url_for('login'))
 
 
@@ -324,16 +367,22 @@ def delete_task(task_ID):
 
     return render_template('delete_task.html', task=task)
 
-
-@app.route('/logout/<confirmation>', methods=['GET', 'POST'])
-def logout(confirmation=None):
-    if confirmation == 'confirmed':
-        # Clear the user's session
+# Logout route
+@app.route('/logout')
+def logout():
+    # Check if the user is logged in
+    if 'user_username' in session:
+        # If logged in, remove the user's data from the session
         session.pop('user_username', None)
-        # Redirect to the login page or any other desired page
-        return redirect(url_for('login'))
+        session.pop('user_data', None)
+        flash('You have been logged out.', 'success')
     else:
-        return render_template('logout.html')
+        flash('You are not logged in.', 'info')
+
+    # Redirect the user to a different page, e.g., the home page
+    return redirect(url_for('home'))
+
+
 
 
 
