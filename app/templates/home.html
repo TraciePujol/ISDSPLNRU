@@ -1,27 +1,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Welcome to PLNR U</title>
+    <title>Welcome Home</title>
+    <style>
+        /* CSS for the sidebar navigation menu */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            padding-top: 20px;
+            padding-left: 10px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* CSS for the main content area */
+        .content {
+            margin-left: 270px; /* Adjust this value to leave space for the sidebar */
+            padding: 20px;
+        }
+
+        /* CSS for the header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+        }
+
+        /* CSS for the header navigation */
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        /* CSS for the buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        /* CSS for the table and its borders */
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd; /* Border around the entire table */
+        }
+
+        /* CSS for table headers (th) */
+        .task-table th {
+            background-color: #f2f2f2; /* Header background color */
+            border: 1px solid #ddd; /* Border for header cells */
+            padding: 8px; /* Add padding for header cells */
+            text-align: left;
+        }
+
+        /* CSS for table cells (td) */
+        .task-table td {
+            border: 1px solid #ddd; /* Border for data cells */
+            padding: 8px; /* Add padding for data cells */
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-    <!-- First header with horizontal navigation -->
-    <header style="display: flex; justify-content: space-between; align-items: center;">
-        <h1>Welcome to PLNR U</h1>
-        <ul>
-            <li><a href="/home">Home</a></li>
-            <li><a href="/tasks">Tasks</a></li> 
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/logout">Sign Out</a></li>
-            <li><a href="mailto:support@plnru.com">Need Support</a></li>
-            <!-- Move the search button here -->
-            <li>
-                <form method="POST" action="{{ url_for('search') }}">
-                    <input type="hidden" name="search_type" value="edu_domain">
-                    <button type="submit">Search Students from your School!</button>
-                </form>
-            </li>
-        </ul>
-    </header>
+    <!-- Sidebar navigation menu -->
+    <div class="sidebar">
+        <a href="/home">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/tasks">Tasks</a>
+        <a href="/logout">Sign Out</a>
+    </div>
+
+    <!-- Header section with the logged-in username -->
+    <div class="header">
+        <span class="logged-in-username">
+            {% if 'user_id' in session %}
+                Logged In: {{ session['user_id'] }}
+            {% endif %}
+        </span>
+    </div>
 
     <div class="content" style="display: flex;">
         <!-- Second set of navigation on the left -->
@@ -41,32 +121,39 @@
         <!-- Display tasks -->
         <div class="tasks">
             <h2>Your Tasks</h2>
-            <ul>
-                {% for task in tasks %}
-                    <li>
-                        <strong>{{ task.title }}</strong><br>
-                        Due Date: {{ task.due_date }}<br>
-                        Description: {{ task.description }}<br>
-                        Priority: {{ task.priority }}<br> <!-- Add this line to display priority -->
-                        
-                        <!-- Add more task details as needed -->
-                        
-                        <!-- Edit and Delete buttons -->
-                        <form method="post" action="/edit_task/{{ task.id }}">
-                            <button type="submit">Edit</button>
-                        </form>
-                        
-                        <form method="post" action="/delete_task/{{ task.id }}">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
+            <table class="task-table">
+                <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Notes</th>
+                        <th>Start Date</th>
+                        <th>Due Date</th>
+                        <th>Priority</th>
+                        <th>Actions</th> <!-- Add the Actions column header -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task, priority in tasks %}
+                        <tr>
+                            <td>{{ task.task_description }}</td>
+                            <td>{{ task.task_Notes }}</td>
+                            <td>{{ task.task_startDate }}</td>
+                            <td>{{ task.task_dueDate }}</td>
+                            <td>{{ priority.taskpriority_description }}</td>
+                            <td>
+                                <!-- Edit button with pencil symbol -->
+                                <a class="edit-button" href="/edit_task/{{ task.id }}" title="Edit Task">&#9998;</a>
+                                <!-- Delete button with "X" symbol -->
+                                <a class="delete-button" href="/delete_task/{{ task.id }}" title="Delete Task">&#10060;</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    </div>
-
+    
     <!-- Footer -->
-    <footer style="margin-top: 20px;">
+    <footer style="margin-top: 20px; margin-left: 270px;">
         <div class="footer-content">
             <div class="left-content">
                 <p>&copy; 2023 Capstone Consultants</p>

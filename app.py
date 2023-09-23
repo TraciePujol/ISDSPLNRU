@@ -10,6 +10,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import or_
 from sqlalchemy import join
 
+from datetime import datetime
+
 
 # Import your Config class and models
 from app.config import Config  # Replace with the actual path to your Config class
@@ -223,41 +225,59 @@ def tasks():
 
 
 # Create Task route
-@app.route('/create_task', methods=['POST'])
+@app.route('/create_task', methods=['GET', 'POST'])
 def create_task():
     if request.method == 'POST':
+        if not is_user_logged_in():  # Check if the user is not logged in
+            flash('Please log in to create a task.', 'info')
+            return redirect(url_for('login'))  # Redirect to the login page
+
         task_description = request.form.get('task_description')
         task_notes = request.form.get('task_notes')
         task_startDate = request.form.get('task_startDate')
         task_dueDate = request.form.get('task_dueDate')
         task_timeEstimate = request.form.get('task_timeEstimate')
+        task_timeEstimateUnit = request.form.get('task_timeEstimateUnit')
         task_Course = request.form.get('task_Course')
         user_username = request.form.get('user_username')  # This is a hidden field
 
-        # Calculate task priority based on due date
-        priority = calculate_priority(task_dueDate)
+        # Calculate the task duration based on the selected unit
+        if task_timeEstimateUnit == 'minute':
+            task_duration = int(task_timeEstimate)
+        elif task_timeEstimateUnit == 'hour':
+            task_duration = int(task_timeEstimate) * 60  # Convert hours to minutes
+        elif task_timeEstimateUnit == 'day':
+            task_duration = int(task_timeEstimate) * 60 * 24  # Convert days to minutes
 
-        # Create a new Task instance with the calculated priority
+        # Create a new Task instance with the calculated duration
         new_task = Task(
             task_description=task_description,
-            task_notes=task_notes,
+            task_Notes=task_notes,
             task_startDate=task_startDate,
             task_dueDate=task_dueDate,
-            task_timeEstimate=task_timeEstimate,
+            task_timeEstimate=task_duration,  # Use the calculated duration
             task_Course=task_Course,
             user_username=user_username,  # Associate the task with the user
-            task_priority=priority  # Assign the calculated priority
         )
-        
+
         # Add and commit the new task to the database
         dbsession.add(new_task)
         dbsession.commit()
 
-        flash('Task created successfully!', 'success')
-        return redirect(url_for('tasks'))
+        # Check if the task was successfully committed to the database
+        created_task = dbsession.query(Task).filter_by(task_description=task_description).first()
+
+        if created_task:
+            flash('Task created successfully!', 'success')
+            return redirect(url_for('tasks'))  # Redirect to the tasks page after creating the task
+        else:
+            flash('Task creation failed. Please try again.', 'error')
+            return redirect(url_for('create_task'))  # Redirect back to the create_task page in case of failure
 
     # Handle other HTTP methods or errors here
-    return redirect(url_for('tasks'))
+    return render_template('create_task.html')  # Render the create_task.html page
+
+
 
 # Edit Task route
 @app.route('/edit_task/<int:task_ID>', methods=['GET', 'POST'])

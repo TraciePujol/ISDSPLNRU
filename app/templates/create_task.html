@@ -46,53 +46,73 @@
     </script>
 </head>
 <body>
-    <h1>Create Task</h1>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Create Task</title>
+        <style>
+            /* Add CSS for priority dropdown */
+            select#task_priority {
+                color: darkblue; /* Change the color to your desired one */
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Create Task</h1>
 
-    <!-- Task creation form -->
-    <form method="POST" action="/create_task">
-        <label for="task_description">Task Name:</label>
-        <input type="text" name="task_description" required><br>
-
-        <label for="task_Notes">Task Description:</label>
-        <textarea name="task_Notes" rows="4"></textarea><br>
-
-        <label for="task_startDate">Start Date:</label>
-        <input type="date" name="task_startDate"><br>
-
-        <label for="task_dueDate">Due Date:</label>
-        <input type="date" name="task_dueDate" id="task_dueDate" onchange="updateTaskPriority()" required><br>
-
-        <label for="task_timeEstimate">Time Estimate (in minutes):</label>
-        <input type="number" name="task_timeEstimate" required><br>
-
-        <label for="task_Course">Course:</label>
-        <input type="text" name="task_Course" required><br>
-
-        <!-- Add a hidden field for user_username to associate the task with the user -->
-        <input type="hidden" name="user_username" value="{{ session['user_username'] }}">
-
-        <!-- Task Priority Dropdown with initial class -->
-        <label for="task_priority">Task Priority:</label>
-        <select name="task_priority" id="task_priority" class="low-priority">
-            <option value="Critical">Critical Priority</option>
-            <option value="High">High Priority</option>
-            <option value="Medium">Medium Priority</option>
-            <option value="Low">Low Priority</option>
-        </select><br>
-
-        <!-- Task Status Dropdown -->
-        <label for="task_status">Task Status:</label>
-        <select name="task_status">
-            <option value="Not Started">Not Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-        </select><br>
-
-        <input type="submit" value="Create Task">
-    </form>
-
-    <a href="/tasks">Back to Tasks</a>
-</body>
+        <!-- Task creation form -->
+        <form method="POST" action="/create_task">
+            <label for="task_description">Task Name:</label>
+            <input type="text" name="task_description" required><br>
+        
+            <label for="task_Notes">Task Description:</label>
+            <textarea name="task_Notes" rows="4"></textarea><br>
+        
+            <label for="task_startDate">Start Date:</label>
+            <input type="date" name="task_startDate"><br>
+        
+            <label for="task_dueDate">Due Date:</label>
+            <input type="date" name="task_dueDate" id="task_dueDate" onchange="updateTaskPriority()" required><br>
+        
+            <label for="task_timeEstimate">Time Estimate:</label>
+            <input type="number" name="task_timeEstimate" required>
+            <select name="task_timeEstimateUnit">
+                <option value="minute">Minute(s)</option>
+                <option value="hour">Hour(s)</option>
+                <option value="day">Day(s)</option>
+            </select><br><br>
+        
+            <label for="task_Course">Course:</label>
+            <input type="text" name="task_Course" required><br>
+        
+            <!-- Add a hidden field for user_username to associate the task with the user -->
+            <input type="hidden" name="user_username" value="{{ session['user_username'] }}"><br>
+        
+            <!-- Task Priority Dropdown with initial class -->
+            <label for="task_priority">Task Priority:</label>
+            <select name="task_priority" id="task_priority" class="low-priority">
+                <option value="Critical">Critical Priority</option>
+                <option value="High">High Priority</option>
+                <option value="Medium">Medium Priority</option>
+                <option value="Low">Low Priority</option>
+            </select><br>
+        
+            <!-- Task Status Dropdown -->
+            <label for="task_status">Task Status:</label>
+            <select name="task_status">
+                <option value="Not Started">Not Started</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </select><br>
+        
+            <input type="submit" value="Create Task">
+        </form>
+        
+        <a href="/tasks">Back to Tasks</a>
+        
+    </body>
+    </html>
+    
 <!-- Footer -->
 <footer>
     <div class="footer-content">

@@ -1,0 +1,97 @@
+/* Styles for the sidebar navigation menu */
+.sidebar {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    padding-top: 20px;
+    padding-left: 10px;
+    float: left; /* Added to make it vertical and on the left */
+    width: 200px; /* Adjust the width as needed */
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+}
+
+.sidebar a:hover {
+    background-color: #555;
+}
+
+/* Styles for the header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+}
+
+/* Styles for the header title */
+.header h1 {
+    margin: 0; /* Remove margin to prevent spacing */
+}
+
+/* Styles for the buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* Styles for the table and its borders */
+.task-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd; /* Border around the entire table */
+}
+
+/* Styles for table headers (th) */
+.task-table th {
+    background-color: #f2f2f2; /* Header background color */
+    border: 1px solid #ddd; /* Border for header cells */
+    padding: 8px; /* Add padding for header cells */
+    text-align: left;
+}
+
+/* Styles for table cells (td) */
+.task-table td {
+    border: 1px solid #ddd; /* Border for data cells */
+    padding: 8px; /* Add padding for data cells */
+    text-align: left;
+}
+
+/* Styles for the footer */
+.footer {
+    margin-top: 20px;
+    margin-left: 270px; /* Adjusted position from the left */
+}
+
+/* Styles for the footer text */
+.footer p {
+    font-size: 12px; /* Adjust the font size as needed */
+}
+
+/* Styles for task priorities with colors */
+.high-priority {
+    color: red;
+}
+
+.medium-priority {
+    color: yellow;
+}
+
+.low-priority {
+    color: green;
+}
