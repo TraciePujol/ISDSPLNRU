@@ -1,103 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Profile</title>
-    <style>
-        /* CSS for the sidebar navigation menu */
-        .sidebar {
-            height: 100%;
-            width: 250px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #333;
-            padding-top: 20px;
-            padding-left: 10px;
-        }
-
-        .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #fff;
-            display: block;
-        }
-
-        .sidebar a:hover {
-            background-color: #555;
-        }
-
-        /* CSS for the main content area */
-        .content {
-            margin-left: 270px; /* Adjust this value to leave space for the sidebar */
-            margin-top: 20px; /* Add margin to move content down below the header */
-            padding: 20px;
-        }
-
-        /* Add your CSS styles here */
-        /* ... */
-
-    </style>
+    <meta charset="utf-8">
+    <title>My Profile | PLNR U</title>
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <link href="../static/css/main.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/sidebar.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <!-- Sidebar navigation menu -->
     <div class="sidebar">
-        <a href="/home">Home</a>
-        <a href="/tasks">Tasks</a>
-        <a href="/profile">Profile</a>
-        <a href="#" onclick="confirmLogout()">Sign Out</a> <!-- Added onclick attribute -->
-        <a href="mailto:support@plnru.com">Need Support</a>
+
+        <div class = sidebar-images>
+            <a href="landing.html">
+                <img class = "sidebar-image" src = "../static/assets/PLNRUdk_bg_icon.png" alt = "PLNR U">
+            </a>
+
+            <a href="landing.html">
+                <img class = "sidebar-image" src = "../static/assets/logo-text-dk-bg.png" alt = "PLNR U">
+            </a>
+        </div>
+
+        <br>
+
+        <div class = "sidebar-links">
+            <a class = "sidebar-link" href="home.html">Home</a>
+            <a class = "sidebar-link" href="tasks.html">Tasks</a>
+            <a class = "sidebar-link" href="profile.html">Profile</a>
+            <a class = "sidebar-link" href="#" onclick="confirmLogout()">Log Out</a> <!-- Added onclick attribute -->
+            <a class = "sidebar-link" href="mailto:support@plnru.com">Support</a>
+        </div>
     </div>
 
     <!-- Navigation menu in the header -->
-    <header>
+    <!-- Header code in body- commented out for now - MCB -->
+    <!-- <header>
         <ul>
             <li><a href="/home">Home</a></li>
             <li><a href="/tasks">Tasks</a></li>
             <li><a href="/profile">Profile</a></li>
-            <li><a href="#" onclick="confirmLogout()">Sign Out</a></li> <!-- Added onclick attribute -->
-            <li><a href="mailto:support@plnru.com">Need Support</a></li>
+            <li><a href="#" onclick="confirmLogout()">Sign Out</a></li> --><!-- Added onclick attribute -->
+            <!-- <li><a href="mailto:support@plnru.com">Support</a></li>
         </ul>
-    </header>
+    </header> -->
 
-    <div style="margin-left: 300px;">
+    <div class = "left-block-w-sidebar">
+        <br>
+        <br>
         <h1>Profile</h1>
 
-        <!-- Display user information -->
-        <p>Username: {{ user.user_username }}</p>
-        <p>Email: {{ user.user_email }}</p>
-        <p>First Name: {{ user.user_firstName }}</p>
-        <p>Last Name: {{ user.user_lastName }}</p>
-        <p>Last Activity: {{ user.user_lastActivity }}</p>
-        <p>Status: {{ user.user_status }}</p>
-        <p>College: {{ user.user_college }}</p>
-        <p>Major: {{ user.user_major }}</p>
-        <p>Graduation: {{ user.user_graduation }}</p>
-        <p>Classification: {{ user.user_classification }}</p>
+        <!-- Display user information in table -->
+        <table class = "table-hover" >
+            <tr>
+                <td>Username</td>
+                <td>{{ user.user_username }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ user.user_email }}</td>
+            </tr>
+            <tr>
+                <td>First Name</td>
+                <td>{{ user.user_firstName }}</td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>{{ user.user_lastName }}</td>
+            </tr>
+            <tr>
+                <td>College</td>
+                <td>{{ user.user_college }}</td>
+            </tr>
+            <tr>
+                <td>Major</td>
+                <td>{{ user.user_major }}</td>
+            </tr>
+            <tr>
+                <td>Graduation Date</td>
+                <td>{{ user.user_graduation }}</td>
+            </tr>
+            <tr>
+                <td>Classification</td>
+                <td>{{ user.user_classification }}</td>
+            </tr>
+
+        </table>
 
         <!-- Edit profile link -->
-        <a href="/edit_profile">Edit Profile</a>
-    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div style="margin-top: 50px; margin-left: 270px;">
-            <div class="footer-content">
-                <div class="left-content">
-                    <p>&copy; 2023 Capstone Consultants</p>
-                    <div class="names">
-                        <p>Project Manager: John Vrana</p>
-                        <p>Documentation & Compliance: Marissa Black</p>
-                        <p>Data & Quality Assurance: Tracie Pujol</p>
-                        <p>ISDS 4125 Fall1 2023</p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
-                </div>
-            </div>
-        </div>
-    </footer>
+        <br>
+        <br>
+        <a href="edit_profile.html">
+            <button class = "button bright-blue left-button">Edit Profile</button>
+        </a>
+
+    </div>
 
     <!-- JavaScript for the logout confirmation -->
     <script>
@@ -112,5 +109,9 @@
             }
         }
     </script>
+
+    <!-- Right image -->
+    <img class = "full-height-image-w-sidebar" src="../static/assets/profile.png">
+
 </body>
 </html>

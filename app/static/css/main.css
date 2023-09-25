@@ -1,97 +1,318 @@
-/* Styles for the sidebar navigation menu */
-.sidebar {
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #333;
-    padding-top: 20px;
-    padding-left: 10px;
-    float: left; /* Added to make it vertical and on the left */
-    width: 200px; /* Adjust the width as needed */
-}
+@charset "utf-8";
 
-.sidebar a {
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 18px;
-    color: #fff;
-    display: block;
-}
+/* 
+PLNR U COLOR PALETTE
+DEEP BLUE       #003366
+BRIGHT BLUE	    #0992C4
+GOLD            #FFD700
+GRAY            #F5F5F5
+*/
 
-.sidebar a:hover {
-    background-color: #555;
-}
+/* BEGIN TRACIE CODE */
+    /* Sidebar styles updated and moved to sidebar.css - MCB */
 
-/* Styles for the header */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-}
+    /* Header styles updated and moved to header.css - MCB */
 
-/* Styles for the header title */
-.header h1 {
-    margin: 0; /* Remove margin to prevent spacing */
-}
+    /* Styles for the buttons */
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        font-size: 16px;
+        background-color: #0992C4;
+        color: #fff;
+        text-decoration: none;
+        margin-right: 10px;
+        cursor: pointer;
+    }
 
-/* Styles for the buttons */
-.btn {
-    display: inline-block;
-    padding: 10px 15px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    margin-right: 10px;
-    cursor: pointer;
-}
+    /* Styles for the table and its borders */
+    .task-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #ddd; /* Border around the entire table */
+    }
 
-/* Styles for the table and its borders */
-.task-table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #ddd; /* Border around the entire table */
-}
+    /* Styles for table headers (th) */
+    .task-table th {
+        background-color: #f2f2f2; /* Header background color */
+        border: 1px solid #ddd; /* Border for header cells */
+        padding: 8px; /* Add padding for header cells */
+        text-align: left;
+    }
 
-/* Styles for table headers (th) */
-.task-table th {
-    background-color: #f2f2f2; /* Header background color */
-    border: 1px solid #ddd; /* Border for header cells */
-    padding: 8px; /* Add padding for header cells */
-    text-align: left;
-}
+    /* Styles for table cells (td) */
+    .task-table td {
+        border: 1px solid #ddd; /* Border for data cells */
+        padding: 8px; /* Add padding for data cells */
+        text-align: left;
+    }
 
-/* Styles for table cells (td) */
-.task-table td {
-    border: 1px solid #ddd; /* Border for data cells */
-    padding: 8px; /* Add padding for data cells */
-    text-align: left;
-}
+    /* Styles for task priorities with colors */
+    .high-priority {
+        color: red;
+    }
 
-/* Styles for the footer */
-.footer {
-    margin-top: 20px;
-    margin-left: 270px; /* Adjusted position from the left */
-}
+    .medium-priority {
+        color: yellow;
+    }
 
-/* Styles for the footer text */
-.footer p {
-    font-size: 12px; /* Adjust the font size as needed */
-}
+    .low-priority {
+        color: green;
+    }
 
-/* Styles for task priorities with colors */
-.high-priority {
-    color: red;
-}
+/* BEGIN MCB CODE */
 
-.medium-priority {
-    color: yellow;
-}
+/* GENERAL */
 
-.low-priority {
-    color: green;
-}
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #f5f5f5;
+        font-family: 'Open Sans', sans-serif;font-size: 22px;    
+    }
+
+/* TEXT */
+
+    .helper-text {
+        font-size: 0.7em;
+    }
+
+/* LINKS */
+
+    a:link {
+        color: #FFD700;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: #0992C4;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:active {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:visited {
+        color: #FFD700;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+
+/* PRIMARY PAGE BLOCKS */
+
+    .left-block {
+        width: 43%;
+        float: left;
+        margin: 5%;
+        margin-top: 3%;
+        animation: slideFromTop; 
+        animation-play-state: running;
+        animation-iteration-count: 1;
+        animation-delay: 0s;
+        animation-timing-function: ease-in;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes slideFromTop{
+        from{margin-top: 0%}
+        to{margin-top:5%}
+    }
+
+    .left-block-w-sidebar {
+        margin-left: 300px;
+        max-width: 40%;
+        animation: slideFromTop; 
+        animation-play-state: running;
+        animation-iteration-count: 1;
+        animation-delay: 0s;
+        animation-timing-function: ease-in;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+    }
+
+    .full-width-content {
+        margin-left: 275px;
+    }
+
+
+
+/* IMAGES */
+
+    .main-logo {
+        width: 43%;
+    }
+
+    .right-image {
+        width: 55%;
+        float:right;
+        animation: slideFromRight; 
+        animation-play-state: running;
+        animation-iteration-count: 1;
+        animation-delay: 0s;
+        animation-timing-function: ease-in;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes slideFromRight{
+        from{margin-right: 0%}
+        to{margin-right:5%}
+    }
+
+    .full-height-image {
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+
+    .full-height-image-w-sidebar {
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+
+/* BUTTONS */
+    .button {
+        height: 50px;
+        width: 150px;
+        font-family: 'Open Sans';
+        font-size: .8em;
+        color: white;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 30px;
+        box-shadow: 3px 3px 3px grey;
+    }
+
+    button:hover {
+        box-shadow: 3px 3px 10px grey, -3px -3px 10px grey; ;        
+    }
+
+    .button.deep-blue {
+        background-color: #003366;
+    }
+
+    .button.deep-blue:hover {
+        background-color: #FFD700;
+        color: #003366;
+        font-weight: bold;
+    }
+
+    .button.bright-blue {
+        background-color: #0992C4;
+    }
+
+    .button.bright-blue:hover {
+        background-color: #FFD700;
+        color: #003366;
+        font-weight: bold;
+    }
+
+    .left-button {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+
+/* FORM ELEMENTS */
+
+    .form {
+        width: 100%;
+    }
+
+    input[type=text], input[type=email], input[type=password] {
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: .8em;
+    }
+
+    input[type=button], input[type=submit] {
+        height: 50px;
+        width: 150px;
+        font-family: 'Open Sans';
+        font-size: .8em;
+        color: white;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 30px;
+        margin-left: 0px;
+        box-shadow: 3px 3px 3px grey;  
+        background-color: #0992C4;  
+    }
+
+    select {
+        font-size: .8em;
+        width: 100%;
+        padding: 5px;
+    }
+
+/* RESPONSIVE MEDIA */
+
+    @media (max-width:1100px) {
+        .full-height-image {
+            display: none;
+        .right-block {
+            width: 100%;
+        }
+        } 
+    }
+
+    @media (max-width:1350px) {
+        .full-height-image-w-sidebar {
+            display: none;
+        .right-block {
+            width: 100%;
+        }
+        } 
+    }
+
+/* TABLES */
+
+    table, th, td {
+        text-align: left;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1 px solid gray;
+    }
+
+    table.table-hover tbody tr:hover {
+        background-color: #0992C4;
+        color: #FFD700;
+        font-weight: bold;
+    }
+
+
+/* INDEX ONLY */
+
+    #index-right-block {
+        width: 30%;
+    }
+
+    #index-log-in {
+        margin-left: 0px;
+    }
+
+/* REGISTER ONLY */
+
+
+
+    .register_form {
+        width: 100%;
+    }

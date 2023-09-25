@@ -1,0 +1,45 @@
+PRIORITY: HIGH
+    -   create task page first draft
+    -   edit task page first draft
+    -   delete task page first draft
+    -   search results page first draft
+
+PRIORITY: MEDIUM
+    -   adjust width of right content to max width when left image isn't displayed
+
+PRIORITY: LOW
+    -   fix alignment of Capstone Consultants logo in landing page footer
+
+STATUS: IN PROGRESS
+    - home page first draft
+
+STATUS: COMPLETE
+    9/25/2023
+    -   fixed mis-named left and right elements... smh
+    -   updated profile page formatting, added content to table
+    -   edit profile page first draft
+    -   updated register page - moved form into table format
+    -   updated login page - moved form into table format
+
+    9/24/2023
+    -   landing page first draft
+    -   register page first draft
+    -   login page first draft
+    -   404 page first draft
+    -   500 page first draft
+    -   profile page first draft    
+    -   Set full-height left images to disappear when screen size is too 
+        small to view both image and page content
+    -   fixed mis-named left and right elements... smh
+
+
+NOTES FOR TEAM:
+    9/25/2023
+    -   QUESTION - search feature is included in home page. Should it be moved
+        to search page?  If not, do we need a search page?
+
+    9/24/2023
+    -   links not working on register page
+    -   code shown as text on register page- commented out for now
+    -   QUESTION - there is a log out page?  Does there need to be?
+    -   header tags and elements in body of profile page - commented out for now

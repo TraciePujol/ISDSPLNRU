@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Registration</title>
+    <meta charset="utf-8">
+    <title>Create your account | PLNR U</title>
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <link href="../static/css/main.css" rel="stylesheet" type="text/css">
     <script>
         function checkExistingAccount() {
             var username = document.getElementById("username").value;
@@ -17,49 +20,86 @@
     </script>
 </head>
 <body>
-    <h1>User Registration</h1>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul>
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+    <!-- Left content div -->
+    <div class = "left-block">
 
-    <form method="POST" action="/register">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required><br>
+        <!-- PLNR U Logo - links to landing page -->
+        <a href="landing.html">
+            <img class = "main-logo" src = "../static/assets/PLNRUlogo.png" alt = "PLNR U">
+        </a>
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" required><br>
+        <!-- Page heading -->
+        <h1>Create your account</h1>
 
-        <!-- Add a password field for the user's password -->
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br>
+        <!-- TRACIE - NOT SURE WHAT THIS IS - IT PRINTS AS TEXT IN THE UI
+            SO I COMMENTED IT OUT FOR NOW -->
 
-        <input type="submit" value="Register" onclick="checkExistingAccount()">
-    </form>
-
-    <p>Already have an account? <a href="/login">Login here</a></p>
-</body>
-<!-- Footer -->
-<footer style="margin-top: 20px;"> <!-- Add margin-top here -->
-    <div class="footer-content">
-        <div class="left-content">
-            <p>&copy; 2023 Capstone Consultants</p>
-            <div class="names">
-                <p>Project Manager: John Vrana</p>
-                <p>Documentation & Compliance: Marissa Black</p>
-                <p>Data & Quality Assurance: Tracie Pujol</p>
-                <p>ISDS 4125 Fall1 2023</p>
-            </div>
+        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %} -->
+        
+        <!-- Form div -->
+        <div class = "form">
+            <table>
+                <form method="POST" action="/register">
+                    <tr>
+                        <td>
+                            <label for="username">Username</label>
+                        </td>
+                        <td>
+                            <input class = "register_form" type="text" name="username" id="username" required>
+                          </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="email">Email</label>
+                        </td>
+                        <td>
+                            <input class = "register_form" type="email" name="email" required>
+                        </td>
+                    </tr>
+                    <!-- Add a password field for the user's password -->
+                    <tr>
+                        <td>
+                            <label for="password">Password</label>
+                        </td>
+                        <td>
+                            <input class = "register_form" type="password" name="password" required><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             
+                        </td>
+                        <td>
+                            <input type="submit" value="Register Now!" onclick="checkExistingAccount()">
+                        </td>
+                    </tr>
+                </form>
+            </table>
         </div>
-        <div class="right-content">
-            <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
+
+        <!-- Login div -->
+        <div style="margin-left: 140px;">
+            <p class = "helper-text">Already have an account?</p>
+
+            <a href="login.html">
+                <button class = "button deep-blue left-button">Log In</button>
+            </a>
         </div>
+
     </div>
-</footer>
+
+    <!-- Right image -->
+    <img class = "full-height-image" src="../static/assets/register.png">
+
+</body>
+
 </html>

@@ -1,0 +1,31 @@
+@charset "utf-8";
+
+/* 
+PLNR U COLOR PALETTE
+DEEP BLUE       #003366
+BRIGHT BLUE	    #0992C4
+GOLD            #FFD700
+GRAY            #F5F5F5
+*/
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0992C4;
+    color: #fff;
+    padding: 10px;
+    margin-left: 250px;
+}
+
+/* CSS for the header navigation */
+.header a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+/* Styles for the header title */
+.header h1 {
+    margin: 0; /* Remove margin to prevent spacing */
+}

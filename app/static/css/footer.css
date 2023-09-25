@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+/* 
+PLNR U COLOR PALETTE
+DEEP BLUE       #003366
+BRIGHT BLUE	    #0992C4
+GOLD            #FFD700
+GRAY            #F5F5F5
+*/
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 70px;
+    max-height: 160px;
+    padding: 20px;
+    background-color: #003366;
+    color: white;
+    text-align: left;
+    overflow: auto;
+}
+
+.footer-help {
+    float: left;
+    padding-left: 70px;
+    width: 30%;
+}
+
+
+.footer-capstone {
+    float: right;
+    /* margin-left: auto; */
+    padding-right: 70px;
+    width: 40%;
+    text-align: right;
+}
+
+.footer-logo img {
+    width: 30px;
+    height: 30px;
+}

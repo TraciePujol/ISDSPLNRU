@@ -1,31 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Welcome Home</title>
+    <meta charset="utf-8">
+    <title>Welcome Home | PLNR U</title>
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <link href="../static/css/main.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/sidebar.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/header.css" rel="stylesheet" type="text/css">
     <style>
-        /* CSS for the sidebar navigation menu */
-        .sidebar {
-            height: 100%;
-            width: 250px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #333;
-            padding-top: 20px;
-            padding-left: 10px;
-        }
 
-        .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #fff;
-            display: block;
-        }
-
-        .sidebar a:hover {
-            background-color: #555;
-        }
 
         /* CSS for the main content area */
         .content {
@@ -34,57 +17,6 @@
             display: flex; /* Added to make the content flex layout */
             justify-content: space-between; /* Spread content horizontally */
             align-items: flex-start; /* Align content to the top */
-        }
-
-        /* CSS for the header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px;
-        }
-
-        /* CSS for the header navigation */
-        .header a {
-            color: #fff;
-            text-decoration: none;
-            margin-left: 10px;
-        }
-
-        /* CSS for the buttons */
-        .btn {
-            display: inline-block;
-            padding: 10px 15px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        /* CSS for the table and its borders */
-        .task-table {
-            width: 100%;
-            border-collapse: collapse;
-            border: 1px solid #ddd; /* Border around the entire table */
-        }
-
-        /* CSS for table headers (th) */
-        .task-table th {
-            background-color: #f2f2f2; /* Header background color */
-            border: 1px solid #ddd; /* Border for header cells */
-            padding: 8px; /* Add padding for header cells */
-            text-align: left;
-        }
-
-        /* CSS for table cells (td) */
-        .task-table td {
-            border: 1px solid #ddd; /* Border for data cells */
-            padding: 8px; /* Add padding for data cells */
-            text-align: left;
         }
 
         /* CSS for search results */
@@ -102,10 +34,26 @@
 <body>
     <!-- Sidebar navigation menu -->
     <div class="sidebar">
-        <a href="/home">Home</a>
-        <a href="/profile">Profile</a>
-        <a href="/tasks">Tasks</a>
-        <a href="#" onclick="confirmLogout()" class="btn">Logout</a> <!-- Added class btn -->
+
+        <div class = sidebar-images>
+            <a href="landing.html">
+                <img class = "sidebar-image" src = "../static/assets/PLNRUdk_bg_icon.png" alt = "PLNR U">
+            </a>
+
+            <a href="landing.html">
+                <img class = "sidebar-image" src = "../static/assets/logo-text-dk-bg.png" alt = "PLNR U">
+            </a>
+        </div>
+
+        <br>
+
+        <div class = "sidebar-links">
+            <a class = "sidebar-link" href="home.html">Home</a>
+            <a class = "sidebar-link" href="tasks.html">Tasks</a>
+            <a class = "sidebar-link" href="profile.html">Profile</a>
+            <a class = "sidebar-link" href="#" onclick="confirmLogout()">Log Out</a> <!-- Added onclick attribute -->
+            <a class = "sidebar-link" href="mailto:support@plnru.com">Support</a>
+        </div>
     </div>
 
     <!-- Header section with the logged-in username -->
@@ -118,91 +66,68 @@
         <a href="#" onclick="confirmLogout()" class="btn">Logout</a> <!-- Added class btn -->
     </div>
 
-    <div class="content">
-        <!-- Second set of navigation on the left -->
-        <ul style="list-style-type: none; padding: 0;">
-            <li><a href="/home">Home</a></li>
-            <li><a href="/tasks">Tasks</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <a href="#" onclick="confirmLogout()" class="btn">Logout</a> <!-- Added class btn -->
-            <li><a href="mailto:support@plnru.com">Need Support</a></li>
-        </ul>
+    <!-- <div class="content"> -->
+    <div class = "full-width-content">
+
 
         <!-- Create New Task button -->
         <div class="create-task-button">
             <a href="/create_task">Create New Task</a>
         </div>
-    </div>
 
-    <!-- Display tasks -->
-    <div class="tasks">
-        <h2>Your Tasks</h2>
-        <table class="task-table">
-            <thead>
-                <tr>
-                    <th>Task Name</th>
-                    <th>Notes</th>
-                    <th>Start Date</th>
-                    <th>Due Date</th>
-                    <th>Priority</th>
-                    <th>Actions</th> <!-- Add the Actions column header -->
-                </tr>
-            </thead>
-            <tbody>
-                {% for task, priority in tasks %}
+        <!-- Display tasks -->
+        <div class="tasks">
+            <h2>Your Tasks</h2>
+            <table class="task-table">
+                <thead>
                     <tr>
-                        <td>{{ task.task_description }}</td>
-                        <td>{{ task.task_Notes }}</td>
-                        <td>{{ task.task_startDate }}</td>
-                        <td>{{ task.task_dueDate }}</td>
-                        <td>{{ priority.taskpriority_description }}</td>
-                        <td>
-                            <!-- Edit button with pencil symbol -->
-                            <a class="edit-button" href="/edit_task/{{ task.id }}" title="Edit Task">&#9998;</a>
-                            <!-- Delete button with "X" symbol -->
-                            <a class="delete-button" href="/delete_task/{{ task.id }}" title="Delete Task">&#10060;</a>
-                        </td>
+                        <th>Task Name</th>
+                        <th>Notes</th>
+                        <th>Start Date</th>
+                        <th>Due Date</th>
+                        <th>Priority</th>
+                        <th>Actions</th> <!-- Add the Actions column header -->
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <!-- User Search -->
-    <div class="search-results">
-        <h2>Search Results</h2>
-        <!-- User search input form -->
-        <form method="POST" action="/search_users" class="user-search">
-            <label for="user_search">Find other students by email:</label>
-            <input type="text" name="user_search" id="user_search" placeholder="Enter email domain (e.g., @lsu.edu)">
-            <input type="submit" value="Search">
-        </form>
-
-        <!-- Display search results here -->
-        <ul>
-            {% for result in search_results %}
-                <li>{{ result.username }} ({{ result.email }})</li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <!-- Footer -->
-    <footer style="margin-top: 20px; margin-left: 270px;">
-        <div class="footer-content">
-            <div class="left-content">
-                <p>&copy; 2023 Capstone Consultants</p>
-                <div class="names">
-                    <p>Project Manager: John Vrana</p>
-                    <p>Documentation & Compliance: Marissa Black</p>
-                    <p>Data & Quality Assurance: Tracie Pujol</p>
-                    <p>ISDS 4125 Fall1 2023</p>
-                </div>
-            </div>
-            <div class="right-content">
-                <img src="/static/images/logo.png" alt="Capstone Consultants Logo">
-            </div>
+                </thead>
+                <tbody>
+                    {% for task, priority in tasks %}
+                        <tr>
+                            <td>{{ task.task_description }}</td>
+                            <td>{{ task.task_Notes }}</td>
+                            <td>{{ task.task_startDate }}</td>
+                            <td>{{ task.task_dueDate }}</td>
+                            <td>{{ priority.taskpriority_description }}</td>
+                            <td>
+                                <!-- Edit button with pencil symbol -->
+                                <a class="edit-button" href="/edit_task/{{ task.id }}" title="Edit Task">&#9998;</a>
+                                <!-- Delete button with "X" symbol -->
+                                <a class="delete-button" href="/delete_task/{{ task.id }}" title="Delete Task">&#10060;</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    </footer>
+
+        <!-- User Search -->
+        <div class="search-results">
+            <h2>Search Results</h2>
+            <!-- User search input form -->
+            <form method="POST" action="/search_users" class="user-search">
+                <label for="user_search">Find other students by email:</label>
+                <input type="text" name="user_search" id="user_search" placeholder="Enter email domain (e.g., @lsu.edu)">
+                <input type="submit" value="Search">
+            </form>
+
+            <!-- Display search results here -->
+            <ul>
+                {% for result in search_results %}
+                    <li>{{ result.username }} ({{ result.email }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
 
     <script>
         function confirmLogout() {
